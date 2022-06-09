@@ -1,0 +1,70 @@
+<app-page-header
+  title="contacts"
+  icon="bi bi-people-fill"
+  description="company employees details"
+></app-page-header>
+
+<div class="row mt-4">
+  <div class="col-md-3 mb-3">
+    <div class="input-group">
+      <span class="input-group-text bg-secondary bg-gradient" id="basic-addon1">
+        <i class="bi bi-search text-info"></i>
+      </span>
+      <input
+        [(ngModel)]="nameTerm"
+        name="name-term"
+        type="text"
+        class="form-control"
+        placeholder="Name"
+      />
+    </div>
+  </div>
+</div>
+
+<div class="row mt-3">
+  <h4>Company Employees Contacts Table</h4>
+
+  <div *ngIf="contacts | filterContacts: 'name':nameTerm as contacts">
+    <table
+      *ngIf="contacts.length; else noContacts"
+      class="table tabled-bordered align-middle mt-3"
+    >
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Birthday</th>
+          <th>Phones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of contacts; index as idx">
+          <td>{{ idx + 1 }}.</td>
+          <td>{{ contact.name | titlecase }}</td>
+          <td>
+            <a [href]="'mailto:' + contact.email">
+              {{ contact.email | lowercase }}
+            </a>
+          </td>
+          <td>
+            {{ contact.birthday | date: "dd/MM/yyyy" }}
+          </td>
+          <td>
+            <ul *ngIf="contact.phones.length; else noPhones">
+              <li *ngFor="let phone of contact.phones">
+                <a [href]="'tel:' + phone">
+                  {{ phone }}
+                </a>
+              </li>
+            </ul>
+
+            <ng-template #noPhones>No phones.</ng-template>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #noContacts>No contacts...</ng-template>

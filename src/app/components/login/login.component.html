@@ -1,0 +1,106 @@
+<div class="row">
+  <div class="col-8 m-auto">
+    <form
+      #loginForm="ngForm"
+      (ngSubmit)="onSubmit(loginForm)"
+      novalidate
+      autocomplete="off"
+    >
+      <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">
+          Royal <i class="bi bi-chevron-double-up text-success"></i> CRM
+        </h1>
+        <p>Login with your account</p>
+      </div>
+
+      <div class="form-group mb-4">
+        <div class="input-group">
+          <input
+            #emailF="ngModel"
+            [(ngModel)]="form.email"
+            name="email"
+            required
+            pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+            [ngClass]="{
+              'is-invalid': emailF.invalid && emailF.touched,
+              'is-valid': emailF.touched && emailF.valid
+            }"
+            type="email"
+            placeholder="email@example.com"
+            id="email"
+            class="form-control"
+            autocomplete="username"
+          />
+          <span class="bg-dark bg-gradient input-group-text" id="basic-addon1">
+            <i class="text-warning bi bi-at"></i>
+          </span>
+          <div *ngIf="emailF.errors?.['required']" class="invalid-feedback">
+            Email is required.
+          </div>
+          <div *ngIf="emailF.errors?.['pattern']" class="invalid-feedback">
+            Valid email is required.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group mb-4">
+        <div class="input-group">
+          <input
+            #password
+            #passwordF="ngModel"
+            [(ngModel)]="form.password"
+            name="password"
+            required
+            minlength="6"
+            [ngClass]="{
+              'is-invalid': passwordF.invalid && passwordF.touched,
+              'is-valid': passwordF.touched && passwordF.valid
+            }"
+            type="password"
+            placeholder="Enter Password"
+            id="password"
+            class="form-control"
+            autocomplete="current-password"
+          />
+          <span class="bg-dark bg-gradient input-group-text" id="basic-addon1">
+            <i
+              #toggle
+              (click)="showAndHide(toggle, password)"
+              class="text-warning bi bi-eye-slash"
+              role="button"
+            ></i>
+          </span>
+          <div *ngIf="passwordF.errors?.['required']" class="invalid-feedback">
+            Password is required.
+          </div>
+          <div *ngIf="passwordF.errors?.['minlength']" class="invalid-feedback">
+            Password must be at least
+            {{passwordF.errors?.['minlength'].requiredLength}} characters.
+          </div>
+        </div>
+      </div>
+
+      <div class="text-danger" *ngIf="error">
+        {{ error }}
+      </div>
+
+      <button
+        [disabled]="loginForm.invalid"
+        class="btn btn-lg btn-primary btn-block"
+        type="submit"
+      >
+        Sign in
+      </button>
+    </form>
+
+    <hr />
+
+    <button appSignWithGoogle class="btn btn-lg btn-primary btn-block">
+      Log in with Google
+    </button>
+
+    <p class="mt-5 mb-3 text-muted text-center">
+      &copy; {{ today | date: "YYYY" }}
+    </p>
+  </div>
+</div>

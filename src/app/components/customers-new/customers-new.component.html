@@ -1,0 +1,174 @@
+<app-page-header
+  title="add customer"
+  description="add a new customer"
+  icon="bi bi-person-plus"
+></app-page-header>
+
+<div class="row mt-5">
+  <div class="col-12">
+    <form
+      #customerForm="ngForm"
+      (ngSubmit)="onSubmit(customerForm)"
+      novalidate="novalidate"
+      autocomplete="off"
+    >
+      <div class="row justify-content-center">
+        <div class="col-md-5 mb-3">
+          <label for="firstName">
+            <span class="text-danger me-1">*</span>
+            <span>First Name</span>
+          </label>
+          <input
+            type="text"
+            #fnf="ngModel"
+            [(ngModel)]="form.firstName"
+            required
+            minlength="2"
+            id="firstName"
+            name="firstName"
+            class="form-control"
+            [ngClass]="{
+              'is-valid': fnf.touched && fnf.valid,
+              'is-invalid': fnf.touched && fnf.invalid
+            }"
+          />
+          <div *ngIf="fnf.errors?.['required']" class="invalid-feedback">
+            First name is required.
+          </div>
+          <div *ngIf="fnf.errors?.['minlength']" class="invalid-feedback">
+            First name must be at least
+            {{fnf.errors?.['minlength'].requiredLength}} characters.
+          </div>
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="lastName">
+            <span class="text-danger me-1">*</span>
+            <span>Last Name</span>
+          </label>
+          <input
+            type="text"
+            #lnf="ngModel"
+            [(ngModel)]="form.lastName"
+            required
+            minlength="2"
+            id="lastName"
+            name="lastName"
+            class="form-control"
+            [ngClass]="{
+              'is-valid': lnf.touched && lnf.valid,
+              'is-invalid': lnf.touched && lnf.invalid
+            }"
+          />
+          <div *ngIf="lnf.errors?.['required']" class="invalid-feedback">
+            Last name is required.
+          </div>
+          <div *ngIf="lnf.errors?.['minlength']" class="invalid-feedback">
+            Last name must be at least
+            {{lnf.errors?.['minlength'].requiredLength}} characters.
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-md-5 mb-3">
+          <label for="email">
+            <span class="text-danger me-1">*</span>
+            <span>Email</span>
+          </label>
+          <input
+            type="text"
+            #ef="ngModel"
+            [(ngModel)]="form.email"
+            required
+            pattern="^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$"
+            id="email"
+            name="email"
+            class="form-control"
+            [ngClass]="{
+              'is-valid': ef.touched && ef.valid,
+              'is-invalid': ef.touched && ef.invalid
+            }"
+          />
+          <div *ngIf="ef.errors?.['required']" class="invalid-feedback">
+            Email is required.
+          </div>
+          <div *ngIf="ef.errors?.['pattern']" class="invalid-feedback">
+            Valid email is required.
+          </div>
+        </div>
+        <div class="col-md-5 mb-3">
+          <label for="phone">
+            <span class="text-danger me-1">*</span>
+            <span>Phone</span>
+          </label>
+          <input
+            #pf="ngModel"
+            [(ngModel)]="form.phone"
+            required
+            pattern="^0[2-9]\d{7,8}$"
+            type="text"
+            id="phone"
+            name="phone"
+            class="form-control"
+            [ngClass]="{
+              'is-valid': pf.touched && pf.valid,
+              'is-invalid': pf.touched && pf.invalid
+            }"
+          />
+          <div *ngIf="pf.errors?.['required']" class="invalid-feedback">
+            Phone is required.
+          </div>
+          <div *ngIf="pf.errors?.['pattern']" class="invalid-feedback">
+            {{ pf.errors?.['pattern'].actualValue}} is not a valid phone number.
+          </div>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-md-10 mb-3">
+          <label for="address">Address</label>
+          <textarea
+            #af="ngModel"
+            [(ngModel)]="form.address"
+            id="address"
+            name="address"
+            rows="5"
+            class="form-control"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="col-md-10 mb-3">
+          <label for="notes">Notes</label>
+          <textarea
+            #nf="ngModel"
+            [(ngModel)]="form.notes"
+            id="notes"
+            name="notes"
+            rows="5"
+            class="form-control"
+          ></textarea>
+        </div>
+      </div>
+
+      <div class="row justify-content-center">
+        <div class="bg-light p-3 text-center">
+          <a routerLink=".." class="btn btn-danger text-light">Cancel</a>
+          <input
+            type="button"
+            (click)="reset(customerForm)"
+            value="Reset"
+            class="btn btn-warning ms-3 text-light"
+          />
+          <input
+            type="submit"
+            [disabled]="customerForm.invalid"
+            value="Save"
+            class="btn btn-success ms-3 text-light"
+          />
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
